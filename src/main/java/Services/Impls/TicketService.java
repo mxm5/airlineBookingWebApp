@@ -10,4 +10,6 @@ public class TicketService extends Service<Ticket, Long, TicketRepository> {
     public TicketService(TicketRepository repository) {
         super(repository);
     }
+
+
 }

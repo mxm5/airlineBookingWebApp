@@ -1,95 +1,70 @@
-<%@ page import="Repositories.Impls.TicketRepository" %>
-<%@ page import="java.io.PrintWriter" %>
+<%@ page import="Services.Impls.CustomerService" %>
+<%@ page import="Repositories.Impls.CustomerRepository" %>
+<%@ page import="Domain.enums.OrderBy" %>
+<%@ page import="Domain.Ticket" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="static Util.TimeUtil.*" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>airline booking</title>
     <jsp:include page="bootstrap/css.jsp"/>
 </head>
 <body>
 <jsp:include page="components/topHeader.jsp"/>
 <jsp:include page="components/navbarMenu.jsp"/>
-
 <%
-
     String home = request.getParameter("home");
     String destination = request.getParameter("destination");
-
-
 %>
-<form class="container" action="index.jsp" method="get">
-    <div class="form-group">
-        <label for="exampleInputEmail1">From</label>
-        <br/>
-        <input
-                type="text"
-                class="form-control p"
-                size="55"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-                placeholder="Enter home "
-                name="home"
-        />
-        <br/>
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">To</label>
-        <br/>
-        <input
-                type="password"
-                class="form-control p"
-                size="55"
-                id="exampleInputPassword1"
-                placeholder="Enter destination"
-                name="destination"
-        />
-    </div>
-    <button type="submit" class="btn btn-primary p">Submit</button>
-</form>
-
-<%
-    out.println(home);
-    out.println(destination);
-%>
+<jsp:include page="components/searchForm.jsp"/>
+<jsp:include page="components/spacer.jsp"/>
 <div class="table-responsive">
-
     <table class="table table-striped">
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">moving date</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">moving-date</th>
+            <th scope="col">arriving-date</th>
+            <th scope="col">price</th>
+            <th scope="col">from</th>
+            <th scope="col">to</th>
+            <th scope="col">discount</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-        </tr>
+        <%
+            int i = 1;
+            CustomerService customerService = new CustomerService(new CustomerRepository());
+            SimpleDateFormat dateFormat = new SimpleDateFormat(" yyyy-MM-dd hh:mm ");
+            for (Ticket ticket : customerService.searchTicketsOrderByMovingDate(home, destination, OrderBy.Desc)) {
+                out.println("<tr>");
+                out.println("<th scope=\"row\"> " + i + "</th> \n");
+                String pattern = " yyyy-mm-dd hh:mm ";
+                DateTimeFormatter form = DateTimeFormatter.ofPattern(pattern);
+                out.println(" <td> " + ticket.getMovingDate().format(form) + "</td>");
+                out.println(" <td> " + ticket.getArrivingDate().format(form) + "</td>");
+                out.println(" <td> " + ticket.getPrice() + "</td>");
+                out.println(" <td> " + ticket.getHome() + "</td>");
+                out.println(" <td> " + ticket.getDestination() + "</td>");
+                LocalDateTime now = nowToLocalDateTime();
+                LocalDateTime oneHourAgo = now.minusHours(1);
+                LocalDateTime movingDate = ticket.getMovingDate();
+                if (movingDate.isAfter(oneHourAgo) && movingDate.isBefore(now))
+                    out.println("   <td>50% off </td>");
+                else
+                    out.println("   <td>none </td>");
+                out.println("</tr>");
+                i++;
+            }
+        %>
         </tbody>
     </table>
 </div>
-
+<jsp:include page="components/spacer.jsp"/>
 <jsp:include page="bootstrap/js.jsp"/>
 </body>
 </html>
