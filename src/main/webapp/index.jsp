@@ -6,6 +6,7 @@
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="static Util.TimeUtil.*" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.util.List" %>
 
 <!doctype html>
 <html lang="en">
@@ -14,12 +15,13 @@
     <jsp:include page="bootstrap/css.jsp"/>
 </head>
 <body>
-<jsp:include page="components/topHeader.jsp"/>
-<jsp:include page="components/navbarMenu.jsp"/>
 <%
     String home = request.getParameter("home");
     String destination = request.getParameter("destination");
+
 %>
+<jsp:include page="components/topHeader.jsp"/>
+<jsp:include page="components/navbarMenu.jsp"/>
 <jsp:include page="components/searchForm.jsp"/>
 <jsp:include page="components/spacer.jsp"/>
 <div class="table-responsive">
@@ -37,28 +39,45 @@
         </thead>
         <tbody>
         <%
+            String emptySearchTable =
+                    "<tr><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>";
             int i = 1;
             CustomerService customerService = new CustomerService(new CustomerRepository());
-            SimpleDateFormat dateFormat = new SimpleDateFormat(" yyyy-MM-dd hh:mm ");
-            for (Ticket ticket : customerService.searchTicketsOrderByMovingDate(home, destination, OrderBy.Desc)) {
-                out.println("<tr>");
-                out.println("<th scope=\"row\"> " + i + "</th> \n");
-                String pattern = " yyyy-mm-dd hh:mm ";
-                DateTimeFormatter form = DateTimeFormatter.ofPattern(pattern);
-                out.println(" <td> " + ticket.getMovingDate().format(form) + "</td>");
-                out.println(" <td> " + ticket.getArrivingDate().format(form) + "</td>");
-                out.println(" <td> " + ticket.getPrice() + "</td>");
-                out.println(" <td> " + ticket.getHome() + "</td>");
-                out.println(" <td> " + ticket.getDestination() + "</td>");
-                LocalDateTime now = nowToLocalDateTime();
-                LocalDateTime oneHourAgo = now.minusHours(1);
-                LocalDateTime movingDate = ticket.getMovingDate();
-                if (movingDate.isAfter(oneHourAgo) && movingDate.isBefore(now))
-                    out.println("   <td>50% off </td>");
-                else
-                    out.println("   <td>none </td>");
-                out.println("</tr>");
-                i++;
+            String pattern = " yyyy-mm-dd hh:mm ";
+            DateTimeFormatter form = DateTimeFormatter.ofPattern(pattern);
+            if (home != null && destination != null) {
+
+                List<Ticket> tickets = customerService.searchTicketsOrderByMovingDate(home, destination, OrderBy.Desc);
+                if (tickets != null) {
+
+                    for (Ticket ticket : tickets) {
+                        out.println("<tr>");
+                        out.println("<th scope=\"row\"> " + i + "</th> \n");
+                        out.println(" <td> " + ticket.getMovingDate().format(form) + "</td>");
+                        out.println(" <td> " + ticket.getArrivingDate().format(form) + "</td>");
+                        out.println(" <td> " + ticket.getPrice() + "</td>");
+                        out.println(" <td> " + ticket.getHome() + "</td>");
+                        out.println(" <td> " + ticket.getDestination() + "</td>");
+                        LocalDateTime now = nowToLocalDateTime();
+                        LocalDateTime oneHourAgo = now.minusHours(1);
+                        LocalDateTime movingDate = ticket.getMovingDate();
+                        if (movingDate.isAfter(oneHourAgo) && movingDate.isBefore(now))
+                            out.println("   <td>50% off </td>");
+                        else
+                            out.println("   <td>none </td>");
+                        out.println("</tr>");
+                        i++;
+                    }
+                } else {
+                    out.println(
+                            emptySearchTable
+                    );
+                }
+            } else {
+
+                out.println(
+                        emptySearchTable
+                );
             }
         %>
         </tbody>

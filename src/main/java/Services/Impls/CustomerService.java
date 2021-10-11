@@ -32,9 +32,14 @@ public class CustomerService extends Service<Customer, Long, CustomerRepository>
 
     @Override
     public Customer loginCustomer(String username, String password) {
-        return repository.existsCustomerWithUsernameAndPassWord(
-                username,
-                password);
+        try {
+
+            return repository.existsCustomerWithUsernameAndPassWord(
+                    username,
+                    password);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
