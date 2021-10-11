@@ -1,6 +1,7 @@
 package Repositories.Apis;
 
 import Base.Repository.RepositoryApi;
+import Domain.Customer;
 import Domain.Ticket;
 import Domain.enums.OrderBy;
 
@@ -12,6 +13,8 @@ public interface TicketRepositoryApi extends RepositoryApi<Ticket,Long> {
     List<Ticket> sortTicketsByHomeCity(OrderBy orderBy);
 
     List<Ticket> sortTicketsByDestinationCity(OrderBy orderBy);
+
+    List<Ticket> getAllCustomersBoughtTickets(Customer customer);
 
     List<Ticket> sortHomeAndDestinyTicketsByPrice(String home, String destination, OrderBy orderBy);
 

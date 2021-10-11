@@ -2,7 +2,7 @@ package Repositories.Impls;
 
 import Base.Repository.Repository;
 import Domain.Company;
-import Domain.Ticket;
+import Domain.Customer;
 import Domain.Ticket;
 import Domain.enums.OrderBy;
 import Repositories.Apis.TicketRepositoryApi;
@@ -51,6 +51,21 @@ public class TicketRepository extends Repository<Ticket, Long> implements Ticket
                             Ticket::getHome
                     ).reversed()).toList();
         return sortTicketsByTicketDestinationCity;
+    }
+
+    @Override
+    public List<Ticket> getAllCustomersBoughtTickets(Customer customer) {
+
+
+        TypedQuery<Ticket> query = getEntityManager().createQuery(
+                " from " + getType().getSimpleName() + " t "
+                        + " where t.owner.id = '" + customer.getId() + "' "
+                , Ticket.class);
+        try {
+            return query.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
@@ -133,11 +148,9 @@ public class TicketRepository extends Repository<Ticket, Long> implements Ticket
             //todo////////////////////////////
             String destination = null;
             Query query = getEntityManager().createNativeQuery(
-                    "select count(t) ,t." + destination + " , t.home from " + getType().getSimpleName() + " t "
+                    " t.home from " + getType().getSimpleName() + " t "
                             + " where t.providerCompany = " + company + " "
                             + " group by t.destination , t.home"
-
-
             );
 
             try {

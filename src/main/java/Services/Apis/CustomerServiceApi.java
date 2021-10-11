@@ -17,6 +17,7 @@ public interface CustomerServiceApi extends ServiceApi<Customer, Long> {
     void refundTicket();//todo
 
 
+    List<Ticket> getAllBoughtTickets();
     List<Ticket> searchTicketsOrderByPrice(String from, String to, OrderBy sorting);
 
     List<Ticket> searchTicketsOrderByCompany(String from, String to, OrderBy sorting);

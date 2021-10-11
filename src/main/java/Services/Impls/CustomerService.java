@@ -18,6 +18,7 @@ import javax.persistence.EntityTransaction;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static Util.Context.*;
 import static Util.DataBaseUtil.*;
 import static Util.TimeUtil.nowToLocalDateTime;
 
@@ -62,7 +63,7 @@ public class CustomerService extends Service<Customer, Long, CustomerRepository>
             Integer halfOfPrice = ticket.getPrice() / 2;
             ticket.setPrice(halfOfPrice);
         }
-        Customer currentCustomer = Context.getCurrentCustomer();
+        Customer currentCustomer = getCurrentCustomer();
         // check balance
         int customerBalance = currentCustomer.getBalance();
         // check transaction fee
@@ -100,6 +101,10 @@ public class CustomerService extends Service<Customer, Long, CustomerRepository>
 
     }
 
+    @Override
+    public List<Ticket> getAllBoughtTickets() {
+        return ticketRepository.getAllCustomersBoughtTickets(getCurrentCustomer());
+    }
 
     @Override
     public List<Ticket> searchTicketsOrderByPrice(String from, String to, OrderBy sorting) {
