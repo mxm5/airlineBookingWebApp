@@ -11,6 +11,10 @@
     if(session.getAttribute("currentCustomer")!=null)
         response.sendRedirect("index.jsp");
 %>
+<div style="text-align: center" >
+    <h3>Register new user</h3>
+</div>
+<jsp:include page="components/spacer.jsp"/>
 <form class="container" action="auth-user" method="POST">
     <div class="form-group">
         <label for="exampleInputEmail1">User Name</label>

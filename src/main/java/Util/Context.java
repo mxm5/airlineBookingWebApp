@@ -61,4 +61,7 @@ public class Context {
     public static void setCurrentModerator(Moderator currentModerator) {
         Context.currentModerator = currentModerator;
     }
+
+    public static void setCustomerService() {
+    }
 }

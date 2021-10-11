@@ -4,10 +4,7 @@ import Base.Entity.BaseEntity;
 import Domain.Ticket;
 import Util.DataBaseUtil;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -55,9 +52,14 @@ public abstract class Repository
                 entityManager.persist(e);
                 transaction.commit();
             } catch (Exception exception) {
+
+                String simpleName = exception.getClass().getSimpleName();
                 if (transaction.isActive()) transaction.rollback();
                 exception.printStackTrace();
-
+                if (simpleName.equals(RollbackException.class.getSimpleName())) {
+                    
+                    throw exception;
+                }
             }
         }
         EntityTransaction transaction = entityManager.getTransaction();
