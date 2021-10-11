@@ -21,15 +21,17 @@
         </ul>
 <%
     String lable = "login";
+    String action="login.jsp";
     if(session.getAttribute("currentCustomer")!=null){
         lable = "logout";
+        action = "customerlogout";
     }
 %>
         <div class="col-md-3 text-end">
             <!-- button link -->
             <a role="button"
                class="btn btn-outline-primary me-2"
-               href=""<%=lable%>".jsp"
+               href="<%=action%>"
             ><%=lable%></a>
             <a role="button" class="btn btn-primary" href="signup.jsp">Sign-up</a>
             <!-- button link -->
