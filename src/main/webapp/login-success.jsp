@@ -40,6 +40,14 @@
             href="customer-dashboard.jsp"
             >go to dashboard </a
           >
+          <br>
+          <br>
+          <a
+                  role="button"
+                  class="btn btn-outline-light me-2"
+                  href="index.jsp"
+          >go to main page </a
+          >
         </figure>
       </div>
     </div>

@@ -13,6 +13,7 @@
 <head>
     <title>airline booking</title>
     <jsp:include page="bootstrap/css.jsp"/>
+
 </head>
 <body>
 <%
@@ -35,12 +36,13 @@
             <th scope="col">from</th>
             <th scope="col">to</th>
             <th scope="col">discount</th>
+            <th scope="col" ></th>
         </tr>
         </thead>
         <tbody>
         <%
             String emptySearchTable =
-                    "<tr><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>";
+                    "<tr><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td></td></tr>";
             int i = 1;
             CustomerService customerService = new CustomerService(new CustomerRepository());
             String pattern = " yyyy-mm-dd hh:mm ";
@@ -51,7 +53,7 @@
                 if (tickets != null) {
 
                     for (Ticket ticket : tickets) {
-                        out.println("<tr onclick=\"window.location='#';\">");
+                        out.println("<tr data-href=\"google.com\">");
                         out.println("<th scope=\"row\"> " + i + "</th> \n");
                         out.println(" <td> " + ticket.getMovingDate().format(form) + "</td>");
                         out.println(" <td> " + ticket.getArrivingDate().format(form) + "</td>");
@@ -65,6 +67,16 @@
                             out.println("   <td>50% off </td>");
                         else
                             out.println("   <td>none </td>");
+                        if (session.getAttribute("currentCustomer") != null)
+                            out.println("   <td> " +
+                                    "  <a role=\"button\" class=\"btn btn-primary\" href=\"" +
+                                    "buy.jsp?tk=" + ticket.getId() +
+                                    "\">" +
+                                    "buy" +
+                                    "</a>" +
+                                    " </td>");
+                        else
+                            out.println("<td></td>");
                         out.println("</tr>");
                         i++;
                     }

@@ -23,12 +23,17 @@
 </head>
 <body>
 <%
+    Customer customer = Context.getCurrentCustomer();
+    RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+
+    if (customer==null)
+        rd.forward(request,response);
+    if (session.getAttribute("currentCustomer") == null) {
+        rd.forward(request,response);
+    }
     response.setHeader("Cache-Control", "no-cache ,no-store ,must-revalidate");
     response.setHeader("Pragma", "no-cache");
     response.setHeader("Expires", "0");
-    if (session.getAttribute("currentCustomer") == null) {
-        response.sendRedirect("login.jsp");
-    }
 %>
 <jsp:include page="components/topHeader.jsp"/>
 <br>
@@ -67,10 +72,7 @@
 </div>
 <br>
 <br>
-<%
-    Customer customer = Context.getCurrentCustomer();
 
-%>
 <div class="m-5">
 <p> first name : <%=customer.getFirstName()%></p>
 <p>last name  : <%=customer.getLastName()%></p>
