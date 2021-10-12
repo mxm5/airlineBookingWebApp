@@ -50,6 +50,12 @@
        class="btn btn-outline-primary "
        href="customerlogout">
          logout
+    </a>    <a
+            style="margin: 0.5rem"
+            role="button"
+       class="btn btn-outline-primary "
+       href="index.jsp">
+         go to main page
     </a>
 </div>
 <br>

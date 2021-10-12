@@ -25,7 +25,7 @@
 <jsp:include page="components/searchForm.jsp"/>
 <jsp:include page="components/spacer.jsp"/>
 <div class="table-responsive">
-    <table class="table table-striped">
+    <table class="table table-striped table-hover">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -51,7 +51,7 @@
                 if (tickets != null) {
 
                     for (Ticket ticket : tickets) {
-                        out.println("<tr>");
+                        out.println("<tr onclick=\"window.location='#';\">");
                         out.println("<th scope=\"row\"> " + i + "</th> \n");
                         out.println(" <td> " + ticket.getMovingDate().format(form) + "</td>");
                         out.println(" <td> " + ticket.getArrivingDate().format(form) + "</td>");
