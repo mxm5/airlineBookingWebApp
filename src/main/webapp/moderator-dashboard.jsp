@@ -40,7 +40,7 @@
             style="margin: 0.5rem"
             role="button"
             class="btn btn-outline-success m-6"
-            href="addbalance.jsp">
+            href="add-tickets.jsp">
          add tickets
     </a>
 

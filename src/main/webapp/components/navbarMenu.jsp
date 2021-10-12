@@ -15,9 +15,9 @@
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="index.jsp" class="nav-link px-2 link-secondary">Home</a></li>
             <li><a href="customer-dashboard.jsp" class="nav-link px-2 link-dark">dashboard</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">Pricing</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
+            <li><a href="moderator-login.jsp" class="nav-link px-2 link-dark">moderator login</a></li>
+<%--            <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>--%>
+<%--            <li><a href="#" class="nav-link px-2 link-dark">About</a></li>--%>
         </ul>
 <%
     String lable = "login";
@@ -27,7 +27,7 @@
         action = "customerlogout";
     }
 %>
-        <div class="col-md-3 text-end">
+<%--        <div class="col-md-3 text-end">--%>
             <!-- button link -->
             <a role="button"
                class="btn btn-outline-primary me-2"
@@ -35,6 +35,6 @@
             ><%=lable%></a>
             <a role="button" class="btn btn-primary" href="signup.jsp">Sign-up</a>
             <!-- button link -->
-        </div>
+<%--        </div>--%>
     </header>
 </div>
