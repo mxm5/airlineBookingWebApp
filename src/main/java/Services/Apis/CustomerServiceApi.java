@@ -18,6 +18,7 @@ public interface CustomerServiceApi extends ServiceApi<Customer, Long> {
 
 
     List<Ticket> getAllBoughtTickets();
+
     List<Ticket> searchTicketsOrderByPrice(String from, String to, OrderBy sorting);
 
     List<Ticket> searchTicketsOrderByCompany(String from, String to, OrderBy sorting);
@@ -29,6 +30,8 @@ public interface CustomerServiceApi extends ServiceApi<Customer, Long> {
     List<Ticket> sortTicketsByHomeCity(OrderBy orderBy);
 
     List<Ticket> sortTicketsByDestinationCity(OrderBy orderBy);
+
+    boolean addBalance(int balance);
 
     void changePassword();//todo
 }

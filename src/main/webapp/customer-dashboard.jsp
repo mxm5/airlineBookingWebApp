@@ -4,7 +4,9 @@
 <%@ page import="Domain.Ticket" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.time.LocalDateTime" %>
-<%@ page import="static Util.TimeUtil.nowToLocalDateTime" %><%--
+<%@ page import="static Util.TimeUtil.nowToLocalDateTime" %>
+<%@ page import="Util.Context" %>
+<%@ page import="Domain.Customer" %><%--
   Created by IntelliJ IDEA.
   User: derian
   Date: 11.10.21
@@ -30,23 +32,24 @@
 %>
 <jsp:include page="components/topHeader.jsp"/>
 <br>
-<div class="d-flex justify-content-around">
+<div class="d-flex justify-content-start">
 
 
-    <a role="button"
-       class="btn btn-outline-primary "
-       href="">
+
+    <a
+            style="margin: 0.5rem"
+            role="button"
+       class="btn btn-outline-primary m-6"
+       href="addbalance.jsp">
         add balance
     </a>
-    <a role="button"
+
+    <a
+            style="margin: 0.5rem"
+            role="button"
        class="btn btn-outline-primary "
-       href="">
-        add balance
-    </a>
-    <a role="button"
-       class="btn btn-outline-primary "
-       href="">
-        add balance
+       href="customerlogout">
+         logout
     </a>
 </div>
 <br>
@@ -58,6 +61,16 @@
 </div>
 <br>
 <br>
+<%
+    Customer customer = Context.getCurrentCustomer();
+
+%>
+<div class="m-5">
+<p> first name : <%=customer.getFirstName()%></p>
+<p>last name  : <%=customer.getLastName()%></p>
+<p> user name  : <%=customer.getUserName()%></p>
+<p> user balance : <%=customer.getBalance()%></p>
+</div>
 
 
 <div class="all-classes-container" style="text-align: center">

@@ -11,15 +11,14 @@ import Exceptions.TicketSold;
 import Repositories.Impls.CustomerRepository;
 import Repositories.Impls.TicketRepository;
 import Services.Apis.CustomerServiceApi;
-import Util.Context;
-import Util.DataBaseUtil;
 
 import javax.persistence.EntityTransaction;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static Util.Context.*;
-import static Util.DataBaseUtil.*;
+import static Util.Context.getCurrentCustomer;
+import static Util.DataBaseUtil.entityManager;
+import static Util.DataBaseUtil.simpleUpdateInTx;
 import static Util.TimeUtil.nowToLocalDateTime;
 
 public class CustomerService extends Service<Customer, Long, CustomerRepository> implements CustomerServiceApi {
@@ -59,7 +58,7 @@ public class CustomerService extends Service<Customer, Long, CustomerRepository>
         LocalDateTime now = nowToLocalDateTime();
         LocalDateTime oneHourAgo = now.minusHours(1);
         LocalDateTime movingDate = ticket.getMovingDate();
-        if (movingDate.isAfter(oneHourAgo)&&movingDate.isBefore(now)) {
+        if (movingDate.isAfter(oneHourAgo) && movingDate.isBefore(now)) {
             Integer halfOfPrice = ticket.getPrice() / 2;
             ticket.setPrice(halfOfPrice);
         }
@@ -92,8 +91,6 @@ public class CustomerService extends Service<Customer, Long, CustomerRepository>
         } else throw new NotEnoughBalance("not enough balance");
         //todo subtract price from balance
     }
-
-
 
 
     @Override
@@ -145,7 +142,22 @@ public class CustomerService extends Service<Customer, Long, CustomerRepository>
     }
 
 
+    @Override
+    public boolean addBalance(int balance) {
+        Customer currentCustomer = getCurrentCustomer();
+        if (currentCustomer != null) {
+            currentCustomer.addBalance(balance);
+            try {
 
+                save(currentCustomer);
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return false;
+    }
 
     @Override
     public void changePassword() {
