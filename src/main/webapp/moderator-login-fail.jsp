@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-    <title>Document</title>
+    <title>moderator login fail</title>
     <jsp:include page="bootstrap/css.jsp"/>
 </head>
 <%
@@ -11,7 +11,7 @@
     response.setHeader("Expires","0");
     String password = request.getParameter("password");
     if(password==null) {
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("moderator-login.jsp");
     }
 %>
 <body class="text-center vsc-initialized">
@@ -33,7 +33,7 @@
             <blockquote class="blockquote">
                 <p>login failed </p>
             </blockquote>
-            <a href="login.jsp"
+            <a href="moderator-login.jsp"
                role="button"
                class="btn btn-outline-light me-2">try again</a>
 

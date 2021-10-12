@@ -1,9 +1,7 @@
 package Controller;
 
 import Domain.Customer;
-import Repositories.Impls.CustomerRepository;
-import Services.Impls.CustomerService;
-import Util.Context;
+import Domain.Moderator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,24 +14,24 @@ import java.io.IOException;
 
 import static Util.Context.*;
 
-@WebServlet("/auth-user")
-public class authCustomer extends HttpServlet {
+@WebServlet("/auth-mod")
+public class authModerator extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String password = req.getParameter("password");
         String username = req.getParameter("username");
-        Customer customer = getCustomerService().loginCustomer(username, password);
-        if (customer != null) {
+        Moderator moderator = getModeratorService().loginModerator(username, password);
+        if (moderator != null) {
             System.out.println("a user logged in ");
             HttpSession session = req.getSession();
-            session.setAttribute("currentCustomer",customer);
-            setCurrentCustomer(customer);
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("login-success.jsp");
-            requestDispatcher.forward(req,resp);
+            session.setAttribute("currentModerator",moderator);
+            setCurrentModerator(moderator);
+            RequestDispatcher rd = req.getRequestDispatcher("moderator-login-success.jsp");
+            rd.forward(req,resp);
         }
         else {
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("login-fail.jsp");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("moderator-login-fail.jsp");
             requestDispatcher.forward(req,resp);
         }
 
