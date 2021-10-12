@@ -72,9 +72,15 @@
     </p>
     <p> user name : <%=moderator.getUserName()%>
     </p>
-    <p> company name : <%=noCompany ?"none":company.getBrandName()%>
+    <p> company name : <%=noCompany ?"" +
+            "<a role=\"button\" class=\"btn btn-danger\" href=\"create-company.jsp\">create company</a>"
+
+            :company.getBrandName()%>
     </p>
-    <p> company balance : <%=noCompany ?"none":company.getBalance()%>
+    <p> company balance : <%=noCompany ?"" +
+            "<a role=\"button\" class=\"btn btn-danger\" href=\"create-company.jsp\">create company</a>"
+
+            :company.getBalance()%>
     </p>
 </div>
 
@@ -107,7 +113,7 @@
 
         <%
             String emptySearchTable =
-                    "<tr><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>";
+                    "<tr><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>";
             int i = 1;
             String pattern = " yyyy-mm-dd hh:mm ";
             DateTimeFormatter form = DateTimeFormatter.ofPattern(pattern);
