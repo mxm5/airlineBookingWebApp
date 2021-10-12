@@ -31,6 +31,7 @@
     response.setHeader("Expires", "0");
 %>
 <jsp:include page="components/topHeader.jsp"/>
+
 <br>
 <div class="d-flex justify-content-start">
 
@@ -47,7 +48,7 @@
             style="margin: 0.5rem"
             role="button"
             class="btn btn-outline-success "
-            href="customerlogout">
+            href="mod-logout">
         logout
     </a>
 </div>
