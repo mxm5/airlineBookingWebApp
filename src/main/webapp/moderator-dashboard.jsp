@@ -8,6 +8,7 @@
 <%@ page import="Util.Context" %>
 <%@ page import="Domain.Customer" %>
 <%@ page import="Domain.Moderator" %>
+<%@ page import="Domain.Company" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 
@@ -31,6 +32,8 @@
     response.setHeader("Expires", "0");
 %>
 <jsp:include page="components/topHeader.jsp"/>
+<% Company company = moderator.getCompany();
+    boolean noCompany = company == null;%>
 
 <br>
 <div class="d-flex justify-content-start">
@@ -69,9 +72,9 @@
     </p>
     <p> user name : <%=moderator.getUserName()%>
     </p>
-    <p> company name : <%=moderator.getCompany().getBrandName()%>
+    <p> company name : <%=noCompany ?"none":company.getBrandName()%>
     </p>
-    <p> company balance : <%=moderator.getCompany().getBalance()%>
+    <p> company balance : <%=noCompany ?"none":company.getBalance()%>
     </p>
 </div>
 

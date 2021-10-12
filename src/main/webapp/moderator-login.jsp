@@ -13,7 +13,7 @@
 </head>
 <jsp:include page="components/spacer.jsp"/>
 <body>
-<div style="text-align: center" >
+<div style="text-align: center">
     <h3>login as moderator</h3>
 </div>
 <jsp:include page="components/spacer.jsp"/>
@@ -44,7 +44,13 @@
         />
     </div>
 
-    <button type="submit" class="btn btn-success p">Submit</button>
+    <button style="margin: 4rem" type="submit" class="btn btn-success p">Submit</button>
+    <a style="margin: 4rem" role="button"
+       class="btn btn-outline-success me-2"
+       href="moderator-signup.jsp"
+    >
+        sign up moderator
+    </a>
 </form>
 <jsp:include page="components/spacer.jsp"/>
 <jsp:include page="bootstrap/js.jsp"/>
